@@ -12,7 +12,6 @@
 @interface ViewController () <WKNavigationDelegate>
 
 @property (nonatomic, strong) WKWebView *webView;
-
 @end
 
 @implementation ViewController
@@ -37,10 +36,12 @@
     self.view = mainView;
 }
 
-- (void) viewWillLayoutSubview {
+- (void) viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
+    //make the webview fill the main view
     self.webView.frame = self.view.frame;
+    
 }
 
 @end
