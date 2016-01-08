@@ -17,6 +17,8 @@
 @property (nonatomic, strong) UIButton *forwardButton;
 @property (nonatomic, strong) UIButton *stopButton;
 @property (nonatomic, strong) UIButton *reloadButton;
+@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
+
 
 @end
 
@@ -27,6 +29,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
 }
 
 -(void)loadView {
@@ -146,12 +151,18 @@
 #pragma mark - Misc
 
 -(void) updateButtonsAndTitle {
-    NSString *webpageTitle = [self.webView.title.copy];
+    NSString *webpageTitle = [self.webView.title copy];
     
     if ([webpageTitle length]) {
         self.title = webpageTitle;
     } else {
         self.title = self.webView.URL.absoluteString;
+    }
+    
+    if (self.webView.isLoading) {
+        [self.activityIndicator startAnimating];
+    } else {
+        [self.activityIndicator stopAnimating];
     }
     
     self.backButton.enabled = [self.webView canGoBack];
