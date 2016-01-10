@@ -45,7 +45,7 @@
     self.textField.returnKeyType = UIReturnKeyDone;
     self.textField.autocorrectionType = UITextAutocapitalizationTypeNone;
     self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
-    self.textField.placeholder = NSLocalizedString(@"Website URL", @"Placeholder text for web browser URl field");
+    self.textField.placeholder = NSLocalizedString(@"Website URL Here or Text Search", @"Placeholder text for web browser URl field");
     self.textField.backgroundColor = [UIColor colorWithWhite:220/255.0f alpha:1];
     self.textField.delegate = self;
     
@@ -103,11 +103,28 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     
+//    NSString *check = textField.text;
+//    NSString *searchString = @"http://";
+//    NSRange resultRange = [check rangeWithString:searchString];
+//    BOOL result = resultRange.location != NSNotFound;
+//    if (result) {
+    
     NSString *URLString = textField.text;
     NSURL *URL = [NSURL URLWithString:URLString];
     
     if (!URL.scheme) {
-        URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", URLString]];
+        NSString *testURL = URL;
+        NSString *whiteSpace = @" ";
+        NSRange testString = [testURL rangeOfString:whiteSpace];
+        BOOL result = testString.location != NSNotFound;
+        
+        if (result) {
+            NSString *searchQuery = [URLString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+            URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://google.com/search?q=%@", searchQuery]];
+
+        } else {
+            URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", URLString]];
+        }
     }
     
     if (URL) {
