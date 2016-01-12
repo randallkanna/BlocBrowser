@@ -40,6 +40,16 @@
     self.webView = [[WKWebView alloc] init];
     self.webView.navigationDelegate = self;
     
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Welcome"
+                                                                   message:@"To the app..."
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {}];
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+    
     self.textField = [[UITextField alloc] init];
     self.textField.keyboardType = UIKeyboardTypeURL;
     self.textField.returnKeyType = UIReturnKeyDone;
@@ -137,6 +147,7 @@
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", @"Error")
                                                                        message:[error localizedDescription]
                                                                 preferredStyle:UIAlertControllerStyleAlert];
+        
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
                                                            style:UIAlertActionStyleCancel handler:nil];
         
