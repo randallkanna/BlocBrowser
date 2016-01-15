@@ -135,4 +135,16 @@
     self.currentLabel = nil;
 }
 
+#pragma mark - Button Enabling
+
+- (void) setEnabled:(BOOL)enabled forButtonWithTitle:(NSString *)title {
+    NSUInteger index = [self.currentTitles indexOfObject:title];
+    
+    if (index != NSNotFound) {
+        UILabel *label = [self.labels objectAtIndex:index];
+        label.userInteractionEnabled = enabled;
+        label.alpha = enabled ? 1.0 : 0.25;
+    }
+}
+
 @end
